@@ -1,0 +1,25 @@
+
+<?php
+$conn = new MySQLi("localhost", "root", "", "userdb");
+
+$sql = "SELECT COUNT(*) AS c FROM users WHERE username='".$_POST['username']."' AND password='".$_POST['password']."'";
+$res = $conn->query($sql);
+$rec = $res->fetch_assoc();
+$valid = ($rec['c'] == 1);
+
+if ($valid)
+{
+    //do session stuff...
+    header("Location: profile.php");
+}
+else
+{
+    print "Nope, incorrect";
+}
+?>
+
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+    <input type="text" name="username" />
+    <input type="password" name="password" />
+    <input type="submit" value="Anmelden" />
+</form>
